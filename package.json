@@ -1,0 +1,18 @@
+{
+  "name": "gh-action-branch-name-version-bump",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stephanrotolante/gh-action-branch-name-version-bump.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stephanrotolante/gh-action-branch-name-version-bump/issues"
+  },
+  "homepage": "https://github.com/stephanrotolante/gh-action-branch-name-version-bump#readme"
+}

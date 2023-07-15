@@ -1,0 +1,26 @@
+name: "Custom Docker Action"
+description: "A custom GitHub Action that runs inside a Docker container"
+
+inputs:
+  version:
+    description: ""
+    required: true
+  major-prefixes:
+    description: "An input parameter for the action"
+    required: true
+  minor-prefixes:
+    description: "An input parameter for the action"
+  patch-prefixes:
+    description: "An input parameter for the action"
+  base-ref:
+    required: true
+  current-ref:
+    required: true
+
+outputs:
+  bumped-version:
+    description: "An output parameter from the action"
+
+runs:
+  using: "docker"
+  image: "your-docker-image:tag"
