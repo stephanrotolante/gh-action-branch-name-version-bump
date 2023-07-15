@@ -1,26 +1,28 @@
-name: "Custom Docker Action"
-description: "A custom GitHub Action that runs inside a Docker container"
+name: "Branch Prefix Version Bump"
+description: "Customer GitHub action designed to version bump your tools based of the branch versions that have been merged into the stable code branch"
+
+runs:
+  using: node16
+  main: index.js
 
 inputs:
   version:
-    description: ""
+    description: "Semver package/library version"
     required: true
   major-prefixes:
-    description: "An input parameter for the action"
+    description: "Major version branch prefixes"
     required: true
   minor-prefixes:
-    description: "An input parameter for the action"
+    description: "Minor version branch prefixes"
   patch-prefixes:
-    description: "An input parameter for the action"
+    description: "Patch version branch prefixes"
   base-ref:
+    description: "The ref of the stable point in time"
     required: true
   current-ref:
+    description: "The ref that contains the latest branches"
     required: true
 
 outputs:
   bumped-version:
-    description: "An output parameter from the action"
-
-runs:
-  using: "docker"
-  image: "your-docker-image:tag"
+    description: "The bumped up package version"

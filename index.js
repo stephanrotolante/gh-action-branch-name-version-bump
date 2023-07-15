@@ -1,6 +1,7 @@
 const { exec } = require("child_process");
 
 const bump = require("./bump");
+const getBranchesFromRef = require("./getBranchesFromRef");
 
 const run = async () => {
   const version = process.env["INPUT_VERSION"] ?? "";
@@ -28,33 +29,36 @@ const run = async () => {
   console.log(`Base Ref ${baseRef}`);
   console.log(`Current Ref ${currentRef}`);
 
-  return new Promise((res, rej) => {
+  const baseBranches = await getBranchesFromRef(baseRef);
+
+  const currentBranches = await getBranchesFromRef(currentRef);
+
+  const diff = currentBranches
+    .filter((element) => !baseBranches.includes(element))
+    .map((branch) => branch.trim());
+
+  const newVersion = bump(diff, version, {
+    major: majorPrefix,
+    minor: minorPrefix,
+    patch: patchPrefix,
+  });
+
+  console.log(`Bumped Version ${newVersion}`);
+
+  await new Promise((resolve, reject) => {
     exec(
-      `git --no-pager log --pretty=format:%s ${baseRef}..${currentRef}`,
-      (error, stdout, stderror) => {
-        if (error) {
-          console.error(error);
-          console.error(stderror);
-          rej(error);
+      `echo "bumped-version=${newVersion}" >> $GITHUB_OUTPUT`,
+      (error, _stdout, stderror) => {
+        if (error || stderror) {
+          error && console.error("error", error);
+          stderror && console.error("stderror", stderror);
+          reject(error);
         }
 
-        if (!stdout) {
-          throw new Error("No Stdout");
-        }
-
-        console.log("Output:");
-        console.log(stdout);
-
-        res(stdout.split("\n"));
-      },
+        resolve();
+      }
     );
-  }).then((branches) =>
-    bump(branches, version, {
-      major: majorPrefix,
-      minor: minorPrefix,
-      patch: patchPrefix,
-    }),
-  );
+  });
 };
 
 run();

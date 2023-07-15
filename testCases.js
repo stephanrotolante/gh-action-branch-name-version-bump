@@ -56,7 +56,7 @@ assert.equal("0.1.2", bump(branches, "0.1.0", prefixes));
 assert.equal("0.0.3", bump(branches, "0.0.1", prefixes));
 assert.equal("1.0.2", bump(branches, "1.0.0", prefixes));
 
-// Test 5
+// Test 6
 branches = [
   "this-this-a-horrible-name",
   "this-this-a-horrible-name",
@@ -69,7 +69,7 @@ assert.equal("0.2.0", bump(branches, "0.1.0", prefixes));
 assert.equal("0.1.0", bump(branches, "0.0.1", prefixes));
 assert.equal("1.1.0", bump(branches, "1.0.0", prefixes));
 
-// Test 6
+// Test 7
 branches = [
   "this-this-a-horrible-name",
   "this-this-a-horrible-name",
